@@ -1,44 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="en-US" class="in-text">
+<style xmlns="http://purl.org/net/xbiblio/csl"
+       version="1.0"
+       class="in-text"
+       default-locale="id-ID">
+
   <info>
-    <title>Harvard-Indonesia-hlm (fixed)</title>
-    <id>http://www.zotero.org/styles/harvard-indonesia-hlm-fixed</id>
-    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm-fixed" rel="self"/>
-    <author>
-      <name>ChatGPT Custom Style</name>
+    <title>Harvard-Indonesia-UNINUS</title>
+    <id>http://www.zotero.org/styles/harvard-indonesia-uninus</id>
+     <!-- REQUIRED: self link -->
+    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm-uninus" rel="self"/>
+    <!-- REQUIRED: documentation link -->
+    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm-uninus/documentation" rel="documentation"/>
+     <author>
+      <name>UNINUS Custom</name>
     </author>
     <category citation-format="author-date"/>
-    <summary>Harvard style modified for Indonesian academic writing using "hlm." instead of "p." (fixed)</summary>
+    <summary>Gaya Harvard Indonesia UNINUS: format (Penulis, Tahun : Halaman)</summary>
     <updated>2025-01-01T00:00:00+00:00</updated>
+
+    <!-- FIXED: hanya satu <rights> + tidak ada karakter ilegal -->
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">
+      Creative Commons Attribution-ShareAlike 3.0 License
+    </rights>
+
   </info>
 
-  <locale>
-    <terms>
-      <!-- 'page' adalah nama term yang valid; kita ganti nilainya menjadi 'hlm.' -->
-      <term name="page">hlm.</term>
-    </terms>
-  </locale>
+  <!-- ========================================================= -->
+  <!-- ======================== CITATION ======================== -->
+  <!-- ========================================================= -->
 
-  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true">
+  <citation et-al-min="4" et-al-use-first="1">
     <layout prefix="(" suffix=")" delimiter="; ">
-      <group delimiter=" ">
+      <group delimiter=", ">
         <names variable="author">
           <name form="short" and="text"/>
+          <substitute>
+            <text variable="title"/>
+            <text value="Anonim"/>
+          </substitute>
         </names>
-        <date variable="issued">
-          <date-part name="year"/>
-        </date>
+
+        <choose>
+          <if variable="issued">
+            <date variable="issued">
+              <date-part name="year"/>
+            </date>
+          </if>
+          <else>
+            <text value="n.d."/>
+          </else>
+        </choose>
       </group>
 
-      <!-- locator (page) akan tampil setelah koma; label akan memakai term 'page' di atas -->
-      <group prefix=", " delimiter="">
-        <label variable="locator" form="short"/>
-        <text variable="locator"/>
+      <!-- locator halaman: : 54 -->
+      <group>
+        <text prefix=" : " variable="locator"/>
       </group>
+
     </layout>
   </citation>
 
-  <bibliography et-al-min="4" et-al-use-first="3">
+  <!-- ========================================================= -->
+  <!-- ====================== BIBLIOGRAPHY ====================== -->
+  <!-- ========================================================= -->
+
+  <bibliography et-al-min="4" et-al-use-first="3" hanging-indent="true">
     <sort>
       <key variable="author"/>
       <key variable="issued"/>
@@ -46,17 +72,120 @@
     </sort>
 
     <layout suffix=".">
+      <!-- NAMA PENULIS -->
       <names variable="author">
-        <name form="long" delimiter=", "/>
+        <name form="long" delimiter=", " and="text" initialize-with="."/>
+        <substitute>
+          <names variable="editor"/>
+          <names variable="translator"/>
+          <text variable="title"/>
+          <text value="Anonim"/>
+        </substitute>
       </names>
-      <text variable="title" prefix=" " suffix="."/>
-      <date variable="issued" prefix=" (" suffix=")">
-        <date-part name="year"/>
-      </date>
-      <group prefix=" " delimiter=", ">
-        <text variable="publisher"/>
-        <text variable="publisher-place"/>
+
+      <!-- TAHUN -->
+      <choose>
+        <if variable="issued">
+          <date variable="issued" prefix=" (" suffix=")">
+            <date-part name="year"/>
+          </date>
+        </if>
+        <else>
+          <text value=" (n.d.)"/>
+        </else>
+      </choose>
+
+      <!-- JUDUL -->
+      <choose>
+        <if type="book thesis report">
+          <text variable="title" prefix=". " font-style="italic"/>
+        </if>
+        <else>
+          <text variable="title" prefix=". "/>
+        </else>
+      </choose>
+
+      <!-- EDITOR / TRANSLATOR -->
+      <group prefix=". ">
+        <names variable="editor">
+          <label form="short" suffix=". "/>
+          <name delimiter=", " initialize-with="." and="text"/>
+        </names>
+        <names variable="translator">
+          <label form="short" suffix=". "/>
+          <name delimiter=", " initialize-with="." and="text"/>
+        </names>
       </group>
+
+      <!-- DETAIL KHUSUS BERDASARKAN TIPE SUMBER -->
+      <choose>
+
+        <!-- ================== JURNAL ================== -->
+        <if type="article-journal">
+          <group prefix=". ">
+            <text variable="container-title" font-style="italic"/>
+            <text variable="volume" prefix=", "/>
+            <text variable="issue" prefix="(" suffix=")"/>
+            <text variable="page" prefix=", hlm. "/>
+          </group>
+        </if>
+
+        <!-- ================== BUKU ================== -->
+        <else-if type="book">
+          <group prefix=". " delimiter=": ">
+            <text variable="publisher-place"/>
+            <text variable="publisher"/>
+          </group>
+        </else-if>
+
+        <!-- ======= SKRIPSI, TESIS, DISSERTASI ========= -->
+        <else-if type="thesis">
+          <group prefix=". ">
+            <text variable="genre"/>
+            <text variable="publisher" prefix=", "/>
+          </group>
+        </else-if>
+
+        <!-- ================= PROSIDING ================= -->
+        <else-if type="paper-conference">
+          <group prefix=". ">
+            <text variable="container-title" font-style="italic"/>
+            <text variable="publisher" prefix=", "/>
+            <text variable="page" prefix=", hlm. "/>
+          </group>
+        </else-if>
+
+        <!-- ================= WEBSITE ================== -->
+        <else-if type="webpage">
+          <group prefix=". ">
+            <text variable="container-title"/>
+            <text variable="URL" prefix=". Tersedia di: "/>
+            <date variable="accessed" prefix=" (diakses ">
+              <date-part name="day" suffix=" "/>
+              <date-part name="month" suffix=" "/>
+              <date-part name="year"/>
+            </date>
+            <text value=")"/>
+          </group>
+        </else-if>
+
+      </choose>
+
     </layout>
   </bibliography>
+
+  <!-- ========================================================= -->
+  <!-- ======================== LOCALE ========================= -->
+  <!-- ========================================================= -->
+
+  <locale>
+    <terms>
+      <term name="page">hlm.</term>
+      <term name="and">dan</term>
+      <term name="et-al">dkk.</term>
+      <term name="editor" form="short">ed.</term>
+      <term name="translator" form="short">trans.</term>
+    </terms>
+  </locale>
+
 </style>
