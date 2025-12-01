@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="en-US" class="in-text">
+  <info>
+    <title>Harvard-Indonesia-hlm</title>
+    <id>http://www.zotero.org/styles/harvard-indonesia-hlm</id>
+    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm" rel="self"/>
+    <author>
+      <name>ChatGPT Custom Style</name>
+    </author>
+    <category citation-format="author-date"/>
+    <summary>Harvard style modified for Indonesian academic writing using "hlm." instead of "p."</summary>
+    <updated>2025-01-01T00:00:00+00:00</updated>
+  </info>
+
+  <locale>
+    <terms>
+      <term name="page">hlm.</term>
+      <term name="page-range">hlm.</term>
+    </terms>
+  </locale>
+
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=" ">
+        <text variable="author"/>
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </group>
+      <group>
+        <label variable="locator" form="short"/>
+        <text variable="locator" prefix=", "/>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography et-al-min="4" et-al-use-first="3">
+    <sort>
+      <key variable="author"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=" ">
+        <text variable="author"/>
+        <date variable="issued" prefix=" (" suffix=")">
+          <date-part name="year"/>
+        </date>
+        <text variable="title" prefix=" " suffix="."/>
+        <group delimiter=", ">
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+        </group>
+      </group>
+    </layout>
+  </bibliography>
+</style>
