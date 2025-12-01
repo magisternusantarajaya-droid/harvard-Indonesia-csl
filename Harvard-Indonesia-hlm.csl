@@ -1,157 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="id-ID">
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="en-US" class="in-text">
   <info>
-    <title>Harvard-Indonesia (UNINUS)</title>
-    <id>http://www.zotero.org/styles/harvard-indonesia-uninus</id>
-    <link href="http://www.zotero.org/styles/harvard-indonesia-uninus" rel="self"/>
+    <title>Harvard-Indonesia-hlm (fixed)</title>
+    <id>http://www.zotero.org/styles/harvard-indonesia-hlm-fixed</id>
+    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm-fixed" rel="self"/>
     <author>
-      <name>Sekolah Pascasarjana UNINUS</name>
+      <name>ChatGPT Custom Style</name>
     </author>
     <category citation-format="author-date"/>
-    <summary>Gaya kutipan Harvard sesuai panduan UNINUS halaman 50-53</summary>
-    <updated>2024-12-25T00:00:00+00:00</updated>
+    <summary>Harvard style modified for Indonesian academic writing using "hlm." instead of "p." (fixed)</summary>
+    <updated>2025-01-01T00:00:00+00:00</updated>
   </info>
-  
+
   <locale>
     <terms>
+      <!-- 'page' adalah nama term yang valid; kita ganti nilainya menjadi 'hlm.' -->
       <term name="page">hlm.</term>
-      <term name="page-range">hlm.</term>
-      <term name="and">dan</term>
-      <term name="et-al">dkk.</term>
-      <term name="accessed">diakses</term>
-      <term name="editor">peny.</term>
-      <term name="editors">peny.</term>
-      <term name="volume">Vol.</term>
-      <term name="issue">No.</term>
     </terms>
   </locale>
-  
-  <!-- FORMAT KUTIPAN: (Penulis Tahun:halaman) -->
-  <citation et-al-min="3" et-al-use-first="1">
+
+  <citation et-al-min="4" et-al-use-first="1" disambiguate-add-year-suffix="true">
     <layout prefix="(" suffix=")" delimiter="; ">
       <group delimiter=" ">
-        <text variable="author"/>
+        <names variable="author">
+          <name form="short" and="text"/>
+        </names>
         <date variable="issued">
           <date-part name="year"/>
         </date>
       </group>
-      <group delimiter=":">
+
+      <!-- locator (page) akan tampil setelah koma; label akan memakai term 'page' di atas -->
+      <group prefix=", " delimiter="">
         <label variable="locator" form="short"/>
         <text variable="locator"/>
       </group>
     </layout>
   </citation>
-  
-  <!-- FORMAT DAFTAR PUSTAKA sesuai buku panduan -->
-  <bibliography et-al-min="4" et-al-use-first="1">
+
+  <bibliography et-al-min="4" et-al-use-first="3">
     <sort>
       <key variable="author"/>
       <key variable="issued"/>
       <key variable="title"/>
     </sort>
-    
-    <layout>
-      <!-- FORMAT DASAR: NamaBelakang, A. (Tahun). Judul. Kota: Penerbit. -->
-      <group delimiter=". ">
-        <!-- Nama pengarang -->
-        <names variable="author">
-          <name and="dan" initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
-          <substitute>
-            <names variable="editor"/>
-            <names variable="translator"/>
-            <text variable="title"/>
-          </substitute>
-        </names>
-        
-        <!-- Tahun dalam kurung -->
-        <date variable="issued" prefix="(" suffix=")">
-          <date-part name="year"/>
-        </date>
-        
-        <!-- Judul buku (italic) -->
-        <choose>
-          <if type="book report thesis">
-            <text variable="title" font-style="italic"/>
-          </if>
-          <else-if type="article-journal article-magazine article-newspaper">
-            <text variable="title" prefix="&quot;" suffix="&quot;"/>
-          </else-if>
-          <else>
-            <text variable="title"/>
-          </else>
-        </choose>
-      </group>
-      
-      <!-- Informasi publikasi -->
-      <group delimiter=". ">
-        <choose>
-          <!-- ARTIKEL JURNAL -->
-          <if type="article-journal">
-            <text variable="container-title" font-style="italic"/>
-            <text variable="volume"/>
-            <text variable="issue" prefix="(" suffix=")"/>
-            <text variable="page" prefix=", hlm. "/>
-          </if>
-          
-          <!-- BUKU -->
-          <else-if type="book report thesis">
-            <text variable="edition" suffix=" ed."/>
-            <text variable="publisher-place"/>
-            <text variable="publisher" prefix=": "/>
-            <text variable="page" prefix="hlm. "/>
-          </else-if>
-          
-          <!-- BAB DALAM BUKU -->
-          <else-if type="chapter paper-thesis">
-            <text variable="container-title" prefix="Dalam: " font-style="italic"/>
-            <names variable="editor" prefix="(" suffix=")" delimiter=", " and="dan">
-              <name initialize-with=". " delimiter=", "/>
-              <label prefix=" " form="short"/>
-            </names>
-            <text variable="publisher-place"/>
-            <text variable="publisher" prefix=": "/>
-            <text variable="page" prefix="hlm. "/>
-          </else-if>
-          
-          <!-- INTERNET -->
-          <else-if type="webpage">
-            <text variable="container-title"/>
-            <text variable="URL"/>
-            <date variable="accessed" prefix="(diakses ">
-              <date-part name="day" suffix=" "/>
-              <date-part name="month" suffix=" "/>
-              <date-part name="year" suffix=")"/>
-            </date>
-          </else-if>
-          
-          <!-- DEFAULT -->
-          <else>
-            <text variable="publisher-place"/>
-            <text variable="publisher" prefix=": "/>
-            <text variable="page" prefix="hlm. "/>
-          </else>
-        </choose>
+
+    <layout suffix=".">
+      <names variable="author">
+        <name form="long" delimiter=", "/>
+      </names>
+      <text variable="title" prefix=" " suffix="."/>
+      <date variable="issued" prefix=" (" suffix=")">
+        <date-part name="year"/>
+      </date>
+      <group prefix=" " delimiter=", ">
+        <text variable="publisher"/>
+        <text variable="publisher-place"/>
       </group>
     </layout>
   </bibliography>
-  
-  <!-- Macro untuk nama pengarang -->
-  <macro name="author">
-    <names variable="author">
-      <name and="dan" initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
-      <substitute>
-        <names variable="editor"/>
-        <names variable="translator"/>
-        <text variable="title"/>
-      </substitute>
-    </names>
-  </macro>
-  
-  <!-- Macro untuk editor -->
-  <macro name="editor">
-    <names variable="editor">
-      <name and="dan" initialize-with=". " delimiter=", " delimiter-precedes-last="always"/>
-      <label prefix=" " form="short"/>
-    </names>
-  </macro>
 </style>
