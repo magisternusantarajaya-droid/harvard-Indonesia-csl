@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" default-locale="id-ID">
+  <info>
+    <title>Harvard-Indonesia-hlm</title>
+    <id>http://www.zotero.org/styles/harvard-indonesia-hlm</id>
+    <link href="http://www.zotero.org/styles/harvard-indonesia-hlm" rel="self"/>
+    <author>
+      <name>Magister Nusantara Jaya</name>
+    </author>
+    <category citation-format="author-date"/>
+    <summary>Harvard style untuk Bahasa Indonesia dengan format hlm.</summary>
+    <updated>2024-12-24T00:00:00+00:00</updated>
+  </info>
+  
+  <locale>
+    <terms>
+      <term name="page">hlm.</term>
+      <term name="page-range">hlm.</term>
+      <term name="and">dan</term>
+      <term name="et-al">dkk.</term>
+    </terms>
+  </locale>
+  
+  <citation et-al-min="3" et-al-use-first="1">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <text variable="author"/>
+      <date variable="issued">
+        <date-part name="year"/>
+      </date>
+      <group delimiter=", ">
+        <label variable="locator" form="short"/>
+        <text variable="locator"/>
+      </group>
+    </layout>
+  </citation>
+  
+  <bibliography et-al-min="4" et-al-use-first="3">
+    <sort>
+      <key variable="author"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout>
+      <text variable="author"/>
+      <date variable="issued" prefix=" (" suffix=")">
+        <date-part name="year"/>
+      </date>
+      <text variable="title" font-style="italic" prefix=". "/>
+      <text variable="publisher-place" prefix=". "/>
+      <text variable="publisher" prefix=": "/>
+      <text variable="page" prefix=". hlm. "/>
+    </layout>
+  </bibliography>
+</style>
